@@ -1,0 +1,72 @@
+{% extends 'base.html' %}
+
+{% block title %}{{pet.name}}'s Info{% endblock%}
+
+{% block header %}Info about {{pet.name}}{% endblock %}
+
+{% block content %}
+<div class="container">
+    <div class="row">
+        <div class="pet-img col-6"><img src="{{pet.photo_url}}" alt="{{pet.name}}'s Image" class="img-fluid"></div>
+        <div class="container col-6">
+            <div class="row m-4">
+            <h2 class="">{{pet.name}}</h2>
+            </div>
+            <div class="row m-4">
+                <div class="col-6">
+                    <p>Species: {{pet.species}}</p>
+                </div>
+                <div class="col-6">
+                    
+                    {% if pet.age %}
+                        <p>Age: {{pet.age}}</p>
+                    {% else %}
+                        <p>Age: <span class="text-danger">N/A</span></p>
+                    {% endif %}
+                </div>
+            </div>
+            <div class="row m-4">
+                {% if pet.notes %}
+                    <p class="col">{{pet.notes}}</p>
+                {% else %}
+                    <p class="col">No notes for {{pet.name}} yet!</p>
+                {% endif %}
+            </div>
+            <div class="row m-4">
+                <div class="col">
+                    <p>Available to adopt: 
+                        {% if pet.available %}
+                            <strong class="text-success">Available</strong>
+                        {% else %}
+                            <strong class="text-danger">Unavailable</strong>
+                        {% endif %}
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <form method="POST" class="form">
+
+        {{ form.hidden_tag() }}
+    
+        {% for field in form
+            if field.widget.input_type != 'hidden' %}
+        <p>
+        {{ field.label }}
+        {{field(class_="form-control")}}
+    
+        {% for error in field.errors %}
+            <div class="alert alert-danger">
+                {{ error }}
+            </div>
+        {% endfor %}
+        </p>
+        {% endfor %}
+
+        <a href="/" class="btn btn-md btn-danger">Cancel</a>
+        <button type="submit" class="btn btn-md btn-success">Submit</button>
+    
+    </form>
+</div>
+
+{% endblock %}

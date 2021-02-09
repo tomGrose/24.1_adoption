@@ -1,0 +1,34 @@
+{% extends 'base.html' %}
+
+{% block title %}Home{% endblock%}
+
+{% block header %}Our Pets{% endblock %}
+
+{% block content %}
+<div class="container mb-5">
+    <table class="table">
+        <thead class="thead-dark">
+            <th>Name</th>
+            <th>Picture</th>
+            <th>Available for Adoption</th>
+            <th>More Info</th>
+        </thead>
+        <tbody>
+            {% for p in pets %}
+            <tr>
+            <td>{{p.name}} </td>
+            <td><img src="{{p.photo_url}}" alt="{{p.name}}'s adoption photo" class="table-img rounded mx-auto d-block"></td>
+            {% if p.available %}
+            <td><strong>Available</strong></td>
+            {% else %}
+            <td></td>
+            {% endif %}
+            <td><a class="btn btn-sm btn-info" href="/{{p.id}}">More Info/Edit</a></td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    <a href="/add"><button class="btn btn-lg btn-success m-4"> Add a Pet </button></a>
+</div>
+
+{% endblock %}
